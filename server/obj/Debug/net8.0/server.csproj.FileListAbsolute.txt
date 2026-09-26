@@ -1,0 +1,17 @@
+Z:\C#\server\bin\Debug\net8.0\server.exe
+Z:\C#\server\bin\Debug\net8.0\server.deps.json
+Z:\C#\server\bin\Debug\net8.0\server.runtimeconfig.json
+Z:\C#\server\bin\Debug\net8.0\server.dll
+Z:\C#\server\bin\Debug\net8.0\server.pdb
+Z:\C#\server\obj\Debug\net8.0\server.GeneratedMSBuildEditorConfig.editorconfig
+Z:\C#\server\obj\Debug\net8.0\server.AssemblyInfoInputs.cache
+Z:\C#\server\obj\Debug\net8.0\server.AssemblyInfo.cs
+Z:\C#\server\obj\Debug\net8.0\server.csproj.CoreCompileInputs.cache
+Z:\C#\server\obj\Debug\net8.0\server.dll
+Z:\C#\server\obj\Debug\net8.0\refint\server.dll
+Z:\C#\server\obj\Debug\net8.0\server.pdb
+Z:\C#\server\obj\Debug\net8.0\server.genruntimeconfig.cache
+Z:\C#\server\obj\Debug\net8.0\ref\server.dll
+Z:\C#\server\bin\Debug\net8.0\settings.json
+Z:\C#\server\bin\Debug\net8.0\static\404.html
+Z:\C#\server\bin\Debug\net8.0\static\search-engine.html
