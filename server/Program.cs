@@ -1,7 +1,5 @@
-﻿using server.Core;
+using server.Core;                  // ← 改成 server.Core
 using System.Text.Json;
-
-
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -17,4 +15,3 @@ while (Console.ReadLine()?.Trim().ToLower() != "stop") { }
 
 server.Stop();
 Console.ReadKey();
-

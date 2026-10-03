@@ -15,3 +15,29 @@ Z:\C#\server\obj\Debug\net8.0\ref\server.dll
 Z:\C#\server\bin\Debug\net8.0\settings.json
 Z:\C#\server\bin\Debug\net8.0\static\404.html
 Z:\C#\server\bin\Debug\net8.0\static\search-engine.html
+Z:\C#\server\bin\Debug\net8.0\static\server.html
+Z:\C#\server\build-test\settings.json
+Z:\C#\server\build-test\static\404.html
+Z:\C#\server\build-test\static\HomeWork 1\fonts\Satisfontory_v1.5.ttf
+Z:\C#\server\build-test\static\HomeWork 1\images\Bolt.webp
+Z:\C#\server\build-test\static\HomeWork 1\images\Corner_top_left.webp
+Z:\C#\server\build-test\static\HomeWork 1\images\Middle.webp
+Z:\C#\server\build-test\static\HomeWork 1\images\Site-logo.webp
+Z:\C#\server\build-test\static\HomeWork 1\images\Texture.webp
+Z:\C#\server\build-test\static\HomeWork 1\index.html
+Z:\C#\server\build-test\static\HomeWork 1\style.css
+Z:\C#\server\build-test\static\search-engine.html
+Z:\C#\server\build-test\static\server.html
+Z:\C#\server\build-test\server.exe
+Z:\C#\server\build-test\server.deps.json
+Z:\C#\server\build-test\server.runtimeconfig.json
+Z:\C#\server\build-test\server.dll
+Z:\C#\server\build-test\server.pdb
+Z:\C#\server\bin\Debug\net8.0\static\fonts\Satisfontory_v1.5.ttf
+Z:\C#\server\bin\Debug\net8.0\static\images\Bolt.webp
+Z:\C#\server\bin\Debug\net8.0\static\images\Corner_top_left.webp
+Z:\C#\server\bin\Debug\net8.0\static\images\Middle.webp
+Z:\C#\server\bin\Debug\net8.0\static\images\Site-logo.webp
+Z:\C#\server\bin\Debug\net8.0\static\images\Texture.webp
+Z:\C#\server\bin\Debug\net8.0\static\index.html
+Z:\C#\server\bin\Debug\net8.0\static\style.css

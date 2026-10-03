@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Text;
 
 namespace server.Core;
@@ -13,7 +13,7 @@ public class HttpServer
     public HttpServer(string[] prefixes)
     {
         _prefixes = prefixes;
-        _staticRoot = Path.Combine(Directory.GetCurrentDirectory(), "static");
+        _staticRoot = Path.Combine(AppContext.BaseDirectory, "static");
     }
 
     public void Start()
@@ -64,19 +64,21 @@ public class HttpServer
         var response = context.Response;
 
         string path = request.Url?.LocalPath ?? "/";
-
-        // 去掉 /connection 前缀（因为前缀是 http://127.0.0.1:8888/connection/）
-        if (path.StartsWith("/connection"))
-            path = path.Substring("/connection".Length);
-
         Console.WriteLine($"Пришел запрос: {path}");
 
         // 主页 → search-engine.html
-        if (string.IsNullOrEmpty(path) || path == "/")
-            path = "/search-engine.html";
+        if (path == "/" || path == "")
+            path = "/index.html";
 
         string relative = path.TrimStart('/').Replace('/', Path.DirectorySeparatorChar);
         string filePath = Path.Combine(_staticRoot, relative);
+
+        if (!filePath.StartsWith(_staticRoot, StringComparison.OrdinalIgnoreCase))
+        {
+            response.StatusCode = 403;
+            response.Close();
+            return;
+        }
 
         if (!File.Exists(filePath))
         {
