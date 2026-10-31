@@ -1,0 +1,18 @@
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.csproj.AssemblyReference.cache
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.GeneratedMSBuildEditorConfig.editorconfig
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.AssemblyInfoInputs.cache
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.AssemblyInfo.cs
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.csproj.CoreCompileInputs.cache
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\Personal Goal Tracker.server.exe
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\Personal Goal Tracker.server.deps.json
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\Personal Goal Tracker.server.runtimeconfig.json
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\Personal Goal Tracker.server.dll
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\Personal Goal Tracker.server.pdb
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\PersonalGoalTracker.Core.dll
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\bin\Debug\net8.0\PersonalGoalTracker.Core.pdb
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal.49B54ACC.Up2Date
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.dll
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\refint\Personal Goal Tracker.server.dll
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.pdb
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\Personal Goal Tracker.server.genruntimeconfig.cache
+Z:\C#\конрольная\Personal Goal Tracker\Personal Goal Tracker\obj\Debug\net8.0\ref\Personal Goal Tracker.server.dll

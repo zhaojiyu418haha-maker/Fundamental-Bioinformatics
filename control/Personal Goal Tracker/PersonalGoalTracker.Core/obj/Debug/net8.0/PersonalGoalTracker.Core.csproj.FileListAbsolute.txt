@@ -1,0 +1,11 @@
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\bin\Debug\net8.0\PersonalGoalTracker.Core.deps.json
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\bin\Debug\net8.0\PersonalGoalTracker.Core.dll
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\bin\Debug\net8.0\PersonalGoalTracker.Core.pdb
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.GeneratedMSBuildEditorConfig.editorconfig
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.AssemblyInfoInputs.cache
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.AssemblyInfo.cs
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.csproj.CoreCompileInputs.cache
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.dll
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\refint\PersonalGoalTracker.Core.dll
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\PersonalGoalTracker.Core.pdb
+Z:\C#\конрольная\Personal Goal Tracker\PersonalGoalTracker.Core\obj\Debug\net8.0\ref\PersonalGoalTracker.Core.dll
