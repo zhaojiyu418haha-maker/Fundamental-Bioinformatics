@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ model.Title }}</title>
+    <style>
+        body { background: #111; color: #eee; font-family: system-ui; padding: 32px; }
+        a { color: #f0c36a; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border-bottom: 1px solid #333; padding: 10px; text-align: left; }
+        .actions { display: flex; gap: 8px; align-items: center; }
+        button, .button { padding: 7px 12px; font: inherit; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+    <h1>{{ model.Title }}</h1>
+    <p><a href="/admin">返回后台首页</a> | <a href="/admin/cards/create">新增卡牌</a></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>等级</th>
+                <th>攻击力</th>
+                <th>生命值</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var card in model.Cards)
+            <tr>
+                <td>{{ card.Id }}</td>
+                <td>{{ card.Name }}</td>
+                <td>{{ card.Tier }}</td>
+                <td>{{ card.Attack }}</td>
+                <td>{{ card.Health }}</td>
+                <td class="actions">
+                    <a class="button" href="/admin/cards/edit?id={{ card.Id }}">编辑</a>
+                    <form method="post" action="/admin/cards/delete">
+                        <input type="hidden" name="id" value="{{ card.Id }}">
+                        <button type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
+</html>

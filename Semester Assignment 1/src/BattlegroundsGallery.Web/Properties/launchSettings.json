@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "BattlegroundsGallery.Web": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "PORT": "5080"
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台</title>
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: system-ui;
+            padding: 40px;
+        }
+
+        form {
+            display: inline;
+        }
+
+        button {
+            padding: 8px 12px;
+            font: inherit;
+        }
+
+        a {
+            color: #f0c36a;
+        }
+    </style>
+</head>
+<body>
+    <h1>管理后台</h1>
+    <p>当前管理员：{{ model.Username }}</p>
+    <p><a href="/admin/cards">进入卡牌管理</a></p>
+    <p>可以新增、编辑和删除卡牌。</p>
+    <p><a href="/cards">返回卡牌列表</a></p>
+
+    <form method="post" action="/account/logout">
+        <button type="submit">退出登录</button>
+    </form>
+</body>
+</html>

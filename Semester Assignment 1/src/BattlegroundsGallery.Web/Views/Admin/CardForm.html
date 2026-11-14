@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ model.Title }}</title>
+    <style>
+        body { background: #111; color: #eee; font-family: system-ui; padding: 32px; }
+        form { max-width: 720px; display: grid; gap: 14px; }
+        label { display: grid; gap: 6px; }
+        input, textarea, select, button { padding: 9px; font: inherit; }
+        textarea { min-height: 140px; }
+        .tribes { display: flex; flex-wrap: wrap; gap: 14px; }
+        .error { color: #ff8b8b; }
+        a { color: #f0c36a; }
+    </style>
+</head>
+<body>
+    <h1>{{ model.Title }}</h1>
+    <p><a href="/admin/cards">返回卡牌管理</a></p>
+
+    @if (model.Error != "")
+    <p class="error">{{ model.Error }}</p>
+    @endif
+
+    <form method="post" action="{{ model.Action }}">
+        @if (model.Card.Id > 0)
+        <input type="hidden" name="id" value="{{ model.Card.Id }}">
+        @endif
+
+        <label>
+            slug
+            <input type="text" name="slug" value="{{ model.Card.Slug }}"
+                   maxlength="120" pattern="[a-z0-9][a-z0-9\-]{0,119}"
+                   placeholder="bubble-gunner" required>
+        </label>
+
+        <label>
+            名称
+            <input type="text" name="name" value="{{ model.Card.Name }}" maxlength="100" required>
+        </label>
+
+        <label>
+            描述
+            <textarea name="description" required>{{ model.Card.Description }}</textarea>
+        </label>
+
+        <label>
+            攻击力
+            <input type="number" name="attack" value="{{ model.Card.Attack }}" min="0" max="100" required>
+        </label>
+
+        <label>
+            生命值
+            <input type="number" name="health" value="{{ model.Card.Health }}" min="0" max="100" required>
+        </label>
+
+        <label>
+            酒馆等级
+            <input type="number" name="tier" value="{{ model.Card.Tier }}" min="1" max="7" required>
+        </label>
+
+        <label>
+            图片路径
+            <input type="text" name="image_path" value="{{ model.Card.ImagePath }}"
+                   placeholder="assets/cards/example.png" required>
+        </label>
+
+        <fieldset>
+            <legend>种族</legend>
+            <div class="tribes">
+                @foreach (var tribe in model.Tribes)
+                <label>
+                    @if (tribe.Selected)
+                    <input type="checkbox" name="tribe_ids" value="{{ tribe.Id }}" checked>
+                    @else
+                    <input type="checkbox" name="tribe_ids" value="{{ tribe.Id }}">
+                    @endif
+                    {{ tribe.Name }}
+                </label>
+                @endforeach
+            </div>
+        </fieldset>
+
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>

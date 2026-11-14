@@ -1,0 +1,21 @@
+# Visual Studio and local build output
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Local caches and test files
+.dotnet-cli/
+.nuget-packages/
+.local-nuget/
+restore.log
+*.bak
+login-cookies.txt
+wrong-cookies.txt
+
+# Git and OS files
+.git/
+.gitignore
+.DS_Store
+Thumbs.db

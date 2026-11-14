@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="酒馆战棋随从图鉴">
+  <title>{{ model.Title }} · 酒馆战棋</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .card-link {
+      display: block;
+      flex: 0 0 240px;
+      width: 240px;
+      max-width: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card-link .minion-card {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .card-link:focus-visible {
+      outline: 2px solid #f0c36a;
+      outline-offset: 4px;
+    }
+
+    .gallery-status {
+      min-height: 1.5em;
+      margin: 0 0 16px;
+      color: #6b5638;
+    }
+
+    .empty-state {
+      margin: 32px 0;
+      color: #6b5638;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__art" aria-hidden="true"></div>
+    <div class="topbar">
+      <a class="brand" href="/cards">
+        <span class="brand__crest" aria-hidden="true">🏆</span>
+        <span>酒馆战棋</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a class="main-nav__link is-active" href="/cards" aria-current="page">图鉴</a>
+        <a class="main-nav__link" href="/feedback">留言反馈</a>
+      </nav>
+      <span class="topbar__version">课程作业</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="filters" aria-labelledby="page-title">
+      <div class="filters__heading">
+        <div>
+          <p class="eyebrow">BATTLEGROUNDS</p>
+          <h1 id="page-title">随从图鉴</h1>
+        </div>
+        <p class="result-meta" aria-live="polite">
+          共 <strong id="result-count">{{ model.Count }}</strong> 位随从
+        </p>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">等级</span>
+        <div class="chip-group" id="tier-filters" aria-label="按等级筛选">
+          <button class="tier-chip" type="button" data-tier="1" aria-label="等级 1"><span class="tier-chip__num">1</span></button>
+          <button class="tier-chip" type="button" data-tier="2" aria-label="等级 2"><span class="tier-chip__num">2</span></button>
+          <button class="tier-chip" type="button" data-tier="3" aria-label="等级 3"><span class="tier-chip__num">3</span></button>
+          <button class="tier-chip" type="button" data-tier="4" aria-label="等级 4"><span class="tier-chip__num">4</span></button>
+          <button class="tier-chip" type="button" data-tier="5" aria-label="等级 5"><span class="tier-chip__num">5</span></button>
+          <button class="tier-chip" type="button" data-tier="6" aria-label="等级 6"><span class="tier-chip__num">6</span></button>
+          <button class="tier-chip" type="button" data-tier="7" aria-label="等级 7"><span class="tier-chip__num">7</span></button>
+        </div>
+        <button class="reset-chip" type="button" id="reset-filters">重置</button>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">种族</span>
+        <div class="chip-group" id="tribe-filters" aria-label="按种族筛选">
+          <button class="tribe-chip" type="button" data-tribe="亡灵">亡灵</button>
+          <button class="tribe-chip" type="button" data-tribe="恶魔">恶魔</button>
+          <button class="tribe-chip" type="button" data-tribe="海盗">海盗</button>
+          <button class="tribe-chip" type="button" data-tribe="机械">机械</button>
+          <button class="tribe-chip" type="button" data-tribe="龙">龙</button>
+          <button class="tribe-chip" type="button" data-tribe="野兽">野兽</button>
+          <button class="tribe-chip" type="button" data-tribe="野猪人">野猪人</button>
+          <button class="tribe-chip" type="button" data-tribe="鱼人">鱼人</button>
+          <button class="tribe-chip" type="button" data-tribe="元素">元素</button>
+          <button class="tribe-chip" type="button" data-tribe="纳迦">纳迦</button>
+        </div>
+      </div>
+
+      <div class="filter-row filter-row--search">
+        <span class="filter-label">关键词</span>
+        <form class="search-box" id="search-form" method="get" action="/cards" role="search">
+          <span class="search-box__icon" aria-hidden="true">⌕</span>
+          <input id="keyword-search" name="q" type="search"
+                 value="{{ model.Query }}"
+                 placeholder="搜索卡牌名称或文本，如“战吼”“圣盾”"
+                 autocomplete="off">
+        </form>
+      </div>
+    </section>
+
+    <section class="gallery" aria-label="随从卡牌列表">
+      <p class="gallery-status" id="search-status"></p>
+
+      <div class="card-grid" id="card-grid">
+        @foreach (var card in model.Cards)
+        <a class="card-link" href="/cards/details?id={{ card.Id }}"
+           aria-label="{{ card.Name }}">
+          <article class="minion-card minion-card--official"
+                   data-tier="{{ card.Tier }}"
+                   data-tribes="{{ card.TribeNames }}">
+            <figure class="official-card">
+              <div class="official-card__inner">
+                <img
+                  class="official-card__img official-card__img--blink"
+                  src="/{{ card.ImagePath }}"
+                  alt=""
+                  width="404"
+                  height="558"
+                  loading="lazy"
+                  aria-hidden="true"
+                  draggable="false"
+                >
+                <img
+                  class="official-card__img"
+                  src="/{{ card.ImagePath }}"
+                  alt="{{ card.Name }}"
+                  width="404"
+                  height="558"
+                  loading="lazy"
+                  draggable="false"
+                >
+              </div>
+              <figcaption class="sr-only">
+                {{ card.Name }}：{{ card.Description }}。攻击力 {{ card.Attack }}，生命值 {{ card.Health }}，{{ card.TribeNames }}。
+              </figcaption>
+            </figure>
+          </article>
+        </a>
+        @endforeach
+      </div>
+
+      @if (model.Count == 0)
+      <p class="empty-state" id="empty-state">没有找到符合条件的卡牌。</p>
+      @else
+      <p class="empty-state" id="empty-state" hidden>没有找到符合条件的卡牌。</p>
+      @endif
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const grid = document.getElementById("card-grid");
+      const count = document.getElementById("result-count");
+      const emptyState = document.getElementById("empty-state");
+      const status = document.getElementById("search-status");
+      const form = document.getElementById("search-form");
+      const input = document.getElementById("keyword-search");
+      const tierButtons = [...document.querySelectorAll("#tier-filters .tier-chip")];
+      const tribeButtons = [...document.querySelectorAll("#tribe-filters .tribe-chip")];
+      const resetButton = document.getElementById("reset-filters");
+
+      const selectedTiers = new Set();
+      const selectedTribes = new Set();
+      let cards = null;
+      let timer;
+
+      const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      }[character]));
+
+      function cardMarkup(card) {
+        const tribes = card.tribes ?? [];
+        const tribeText = tribes.join(",");
+
+        return `
+          <a class="card-link" href="/cards/details?id=${encodeURIComponent(card.id)}"
+             aria-label="${escapeHtml(card.name)}">
+            <article class="minion-card minion-card--official"
+                     data-tier="${card.tier}"
+                     data-tribes="${escapeHtml(tribeText)}">
+              <figure class="official-card">
+                <div class="official-card__inner">
+                  <img class="official-card__img official-card__img--blink"
+                       src="/${escapeHtml(card.imagePath)}"
+                       alt="" width="404" height="558"
+                       loading="lazy" aria-hidden="true" draggable="false">
+                  <img class="official-card__img"
+                       src="/${escapeHtml(card.imagePath)}"
+                       alt="${escapeHtml(card.name)}"
+                       width="404" height="558"
+                       loading="lazy" draggable="false">
+                </div>
+                <figcaption class="sr-only">
+                  ${escapeHtml(card.name)}：${escapeHtml(card.description)}。攻击力 ${card.attack}，生命值 ${card.health}，${escapeHtml(tribes.join("、"))}。
+                </figcaption>
+              </figure>
+            </article>
+          </a>`;
+      }
+
+      function applyFilters() {
+        if (!cards) {
+          return;
+        }
+
+        const filtered = cards.filter((card) => {
+          const tierMatches = selectedTiers.size === 0 || selectedTiers.has(String(card.tier));
+          const tribes = card.tribes ?? [];
+          const tribeMatches = selectedTribes.size === 0
+            || tribes.some((tribe) => selectedTribes.has(tribe));
+          return tierMatches && tribeMatches;
+        });
+
+        grid.innerHTML = filtered.map(cardMarkup).join("");
+        count.textContent = filtered.length;
+        emptyState.hidden = filtered.length !== 0;
+      }
+
+      async function loadCards() {
+        status.textContent = "加载中…";
+
+        try {
+          const response = await fetch(
+            `/api/cards/search?q=${encodeURIComponent(input.value.trim())}`,
+            { cache: "no-store" });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          cards = await response.json();
+          applyFilters();
+          status.textContent = "";
+        } catch (error) {
+          status.textContent = "加载失败，请稍后重试。";
+        }
+      }
+
+      tierButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tier = button.dataset.tier;
+          if (selectedTiers.has(tier)) {
+            selectedTiers.delete(tier);
+            button.classList.remove("is-active");
+          } else {
+            selectedTiers.add(tier);
+            button.classList.add("is-active");
+          }
+
+          if (cards === null) {
+            loadCards();
+          } else {
+            applyFilters();
+          }
+        });
+      });
+
+      tribeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tribe = button.dataset.tribe;
+          if (selectedTribes.has(tribe)) {
+            selectedTribes.delete(tribe);
+            button.classList.remove("is-active");
+          } else {
+            selectedTribes.add(tribe);
+            button.classList.add("is-active");
+          }
+
+          if (cards === null) {
+            loadCards();
+          } else {
+            applyFilters();
+          }
+        });
+      });
+
+      resetButton.addEventListener("click", () => {
+        selectedTiers.clear();
+        selectedTribes.clear();
+        tierButtons.forEach((button) => button.classList.remove("is-active"));
+        tribeButtons.forEach((button) => button.classList.remove("is-active"));
+        input.value = "";
+        loadCards();
+      });
+
+      input.addEventListener("input", () => {
+        clearTimeout(timer);
+        timer = setTimeout(loadCards, 250);
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        clearTimeout(timer);
+        loadCards();
+      });
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const grid = document.getElementById("card-grid");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      grid.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch" || reduceMotion.matches) {
+          return;
+        }
+
+        const card = event.target.closest(".official-card");
+        if (!card) {
+          return;
+        }
+
+        const inner = card.querySelector(".official-card__inner");
+        if (!inner) {
+          return;
+        }
+
+        const rect = card.getBoundingClientRect();
+        const offsetX = (event.clientX - rect.left) / rect.width - 0.5;
+        const offsetY = (event.clientY - rect.top) / rect.height - 0.5;
+        const rotateY = offsetX * 10;
+        const rotateX = offsetY * -10;
+
+        inner.style.transform =
+          `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) ` +
+          `rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      grid.addEventListener("pointerout", (event) => {
+        const card = event.target.closest(".official-card");
+        if (!card || card.contains(event.relatedTarget)) {
+          return;
+        }
+
+        const inner = card.querySelector(".official-card__inner");
+        if (inner) {
+          inner.style.transform = "";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

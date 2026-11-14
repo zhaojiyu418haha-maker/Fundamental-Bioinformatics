@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ model.Title }}</title>
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: system-ui;
+            padding: 40px;
+        }
+
+        a {
+            color: #f0c36a;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ model.Title }}</h1>
+    <p>{{ model.Message }}</p>
+    <p><a href="/cards">进入卡牌列表</a></p>
+    <p><a href="/feedback">留言反馈</a></p>
+    <p><a href="/">返回原来的静态图鉴</a></p>
+</body>
+</html>

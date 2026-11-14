@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言反馈</title>
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: system-ui;
+            padding: 40px;
+        }
+
+        form {
+            max-width: 560px;
+            display: grid;
+            gap: 14px;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+        }
+
+        input, textarea, button {
+            padding: 10px;
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .error {
+            color: #ff8b8b;
+        }
+
+        .success {
+            color: #8fe39a;
+        }
+
+        .counter {
+            color: #aaa;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        a {
+            color: #f0c36a;
+        }
+    </style>
+</head>
+<body>
+    <h1>留言反馈</h1>
+    <p>如果你对图鉴有建议，可以在这里留言。</p>
+
+    @if (model.Success)
+    <p class="success">留言已提交，感谢你的反馈。</p>
+    @endif
+
+    @if (model.Error != "")
+    <p class="error">{{ model.Error }}</p>
+    @endif
+
+    <p id="client-error" class="error"></p>
+
+    <form method="post" action="/feedback" id="feedback-form">
+        <label>
+            姓名
+            <input type="text" name="name" value="{{ model.Name }}"
+                   minlength="2" maxlength="64" required>
+        </label>
+
+        <label>
+            邮箱
+            <input type="email" name="email" value="{{ model.Email }}"
+                   maxlength="128" required>
+        </label>
+
+        <label>
+            留言
+            <textarea name="message" minlength="5" maxlength="1000"
+                      required>{{ model.Message }}</textarea>
+            <span class="counter" id="message-counter">0 / 1000</span>
+        </label>
+
+        <button type="submit">提交留言</button>
+    </form>
+
+    <p><a href="/cards">返回卡牌列表</a></p>
+
+    <script>
+        const form = document.getElementById("feedback-form");
+        const nameInput = form.elements["name"];
+        const emailInput = form.elements["email"];
+        const messageInput = form.elements["message"];
+        const counter = document.getElementById("message-counter");
+        const errorBox = document.getElementById("client-error");
+        const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+        const namePattern = /^[\p{L}\p{N}·'’ .\-]{2,64}$/u;
+
+        function updateCounter() {
+            counter.textContent = `${messageInput.value.length} / 1000`;
+        }
+
+        messageInput.addEventListener("input", updateCounter);
+        updateCounter();
+
+        form.addEventListener("submit", (event) => {
+            const messages = [];
+
+            if (!namePattern.test(nameInput.value.trim())) {
+                messages.push("姓名需要是 2–64 个字符。");
+            }
+
+            if (!emailPattern.test(emailInput.value.trim())) {
+                messages.push("请输入有效的邮箱地址。");
+            }
+
+            if (messageInput.value.trim().length < 5) {
+                messages.push("留言至少需要 5 个字符。");
+            }
+
+            if (messages.length > 0) {
+                event.preventDefault();
+                errorBox.textContent = messages.join(" ");
+            }
+        });
+    </script>
+</body>
+</html>

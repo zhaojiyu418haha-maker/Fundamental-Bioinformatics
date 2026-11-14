@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\BattlegroundsGallery.Server\BattlegroundsGallery.Server.csproj" />
+    <ProjectReference Include="..\BattlegroundsGallery.Mvc\BattlegroundsGallery.Mvc.csproj" />
+    <ProjectReference Include="..\BattlegroundsGallery.Templating\BattlegroundsGallery.Templating.csproj" />
+    <ProjectReference Include="..\BattlegroundsGallery.Data\BattlegroundsGallery.Data.csproj" />
+    <ProjectReference Include="..\BattlegroundsGallery.Orm\BattlegroundsGallery.Orm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wwwroot\**\*" />
+    <Content Include="wwwroot\**\*"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Views\**\*"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BattlegroundsGallery.Web</RootNamespace>
+  </PropertyGroup>
+
+</Project>

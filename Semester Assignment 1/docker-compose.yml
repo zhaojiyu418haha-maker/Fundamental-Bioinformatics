@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: battlegrounds_gallery
+      POSTGRES_USER: bg_app
+      POSTGRES_PASSWORD: bg_dev_password
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bg_app -d battlegrounds_gallery"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      BATTLEGROUNDS_DB: "Host=db;Port=5432;Database=battlegrounds_gallery;Username=bg_app;Password=bg_dev_password;"
+    ports:
+      - "5080:5080"
+
+volumes:
+  db_data:

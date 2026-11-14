@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>卡牌详情 · 酒馆战棋</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .details-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px clamp(18px, 3.2vw, 34px) 48px;
+    }
+
+    .details-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .details-topbar a {
+      color: #5b4324;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .details-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) 1fr;
+      gap: clamp(24px, 5vw, 64px);
+      align-items: start;
+    }
+
+    .details-card img {
+      display: block;
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(44, 28, 8, 0.28);
+    }
+
+    .details-info {
+      padding-top: 8px;
+    }
+
+    .details-info h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 54px);
+      color: #382610;
+    }
+
+    .details-eyebrow {
+      margin: 0 0 10px;
+      color: #8b6a3e;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+    }
+
+    .details-description {
+      margin: 20px 0;
+      color: #4e3c27;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .details-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .details-stat {
+      min-width: 110px;
+      padding: 12px 16px;
+      border: 1px solid #c9b18a;
+      border-radius: 10px;
+      background: rgba(255, 250, 240, 0.7);
+    }
+
+    .details-stat span {
+      display: block;
+      color: #8b6a3e;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .details-stat strong {
+      display: block;
+      margin-top: 4px;
+      color: #3d2a13;
+      font-size: 24px;
+    }
+
+    .details-tribes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 28px;
+    }
+
+    .details-tribe {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #e3cfa9;
+      color: #4a351c;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .details-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .details-button {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #3d2a13;
+      color: #fff3dc;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .details-button--secondary {
+      background: transparent;
+      border: 1px solid #8b6a3e;
+      color: #5b4324;
+    }
+
+    @media (max-width: 760px) {
+      .details-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .details-card {
+        max-width: 360px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="details-page">
+    <div class="details-topbar">
+      <a href="/cards">← 返回随从图鉴</a>
+      <a href="/feedback">留言反馈</a>
+    </div>
+
+    @if (model != null)
+    <div class="details-layout">
+      <div class="details-card">
+        <img src="/{{ model.ImagePath }}" alt="{{ model.Name }}" width="404" height="558">
+      </div>
+
+      <section class="details-info">
+        <p class="details-eyebrow">BATTLEGROUNDS MINION</p>
+        <h1>{{ model.Name }}</h1>
+        <p class="details-description">{{ model.Description }}</p>
+
+        <div class="details-stats">
+          <div class="details-stat">
+            <span>攻击力</span>
+            <strong>{{ model.Attack }}</strong>
+          </div>
+          <div class="details-stat">
+            <span>生命值</span>
+            <strong>{{ model.Health }}</strong>
+          </div>
+          <div class="details-stat">
+            <span>酒馆等级</span>
+            <strong>{{ model.Tier }}</strong>
+          </div>
+        </div>
+
+        <div class="details-tribes">
+          @foreach (var tribe in model.Tribes)
+          <span class="details-tribe">{{ tribe.Name }}</span>
+          @endforeach
+        </div>
+
+        <div class="details-actions">
+          <a class="details-button" href="/cards">返回列表</a>
+          <a class="details-button details-button--secondary" href="/feedback">留下反馈</a>
+        </div>
+      </section>
+    </div>
+    @else
+    <section class="details-info">
+      <h1>没有找到这张卡牌</h1>
+      <p class="details-description">这张卡牌可能已经被删除，或者链接不正确。</p>
+      <a class="details-button" href="/cards">返回随从图鉴</a>
+    </section>
+    @endif
+  </main>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Visual Studio / .NET
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local tooling / caches
+.dotnet-cli/
+.nuget-packages/
+.local-nuget/
+restore.log
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
