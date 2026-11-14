@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时钟与快捷方式</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            color: #333;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 640px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .time {
+            font-size: 72px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #222;
+        }
+
+        .date {
+            margin-top: 8px;
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* ===== 搜索框 ===== */
+        .search-box {
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box select {
+            height: 44px;
+            padding: 0 8px;
+            font-size: 14px;
+            color: #555;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 22px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .search-input-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 22px;
+            padding: 0 8px 0 18px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .search-input-wrap:focus-within {
+            background: #fff;
+            border-color: #bbb;
+        }
+
+        .search-input-wrap input {
+            flex: 1;
+            height: 44px;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .search-input-wrap input::placeholder {
+            color: #aaa;
+        }
+
+        .search-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .search-btn:hover {
+            background: #e8e8e8;
+            color: #000;
+        }
+
+        /* ===== 图标导航 ===== */
+        .icons {
+            margin-top: 36px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .icon i {
+            font-size: 36px;
+            color: #555;
+            transition: color 0.2s;
+        }
+
+        .icon:hover i {
+            color: #000;
+        }
+
+        .icon span {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== 手机适配 ===== */
+        @media (max-width: 600px) {
+            .time { font-size: 48px; }
+            .date { font-size: 15px; }
+            .icons { gap: 24px; }
+            .search-box select { display: none; }  /* 手机上先隐藏引擎选择，可自行调整 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">加载中...</div>
+
+        <!-- ===== 搜索框 ===== -->
+        <div class="search-box">
+            <select id="engine">
+                <option value="baidu">百度</option>
+                <option value="bing">必应</option>
+                <option value="google">Google</option>
+                <option value="bilibili">B站</option>
+            </select>
+            <div class="search-input-wrap">
+                <input type="text" id="searchInput" placeholder="输入关键词后按回车搜索" autocomplete="off">
+                <button class="search-btn" id="searchBtn" title="搜索">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== 图标导航 ===== -->
+        <div class="icons">
+            <div class="icon" data-url="https://www.baidu.com">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>百度</span>
+            </div>
+            <div class="icon" data-url="https://www.taobao.com">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>淘宝</span>
+            </div>
+            <div class="icon" data-url="https://www.bilibili.com">
+                <i class="fa-solid fa-tv"></i>
+                <span>哔哩哔哩</span>
+            </div>
+            <div class="icon" data-url="https://www.zhihu.com">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>知乎</span>
+            </div>
+            <div class="icon" data-url="https://github.com">
+                <i class="fa-brands fa-github"></i>
+                <span>GitHub</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===== 时钟 ===== */
+        function updateClock() {
+            const now = new Date();
+
+            const h = String(now.getHours()).padStart(2, "0");
+            const m = String(now.getMinutes()).padStart(2, "0");
+            const s = String(now.getSeconds()).padStart(2, "0");
+            document.getElementById("time").textContent = `${h}:${m}:${s}`;
+
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const day = String(now.getDate()).padStart(2, "0");
+            const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            const week = weekdays[now.getDay()];
+            document.getElementById("date").textContent = `${year}年${month}月${day}日 ${week}`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        /* ===== 搜索 ===== */
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        const engineSelect = document.getElementById("engine");
+
+        function doSearch() {
+            const keyword = searchInput.value.trim();
+            if (!keyword) return;
+
+            const engine = engineSelect.value;
+            let url = "";
+
+            switch (engine) {
+                case "baidu":
+                    url = "https://www.baidu.com/s?wd=" + encodeURIComponent(keyword);
+                    break;
+                case "bing":
+                    url = "https://www.bing.com/search?q=" + encodeURIComponent(keyword);
+                    break;
+                case "google":
+                    url = "https://www.google.com/search?q=" + encodeURIComponent(keyword);
+                    break;
+                case "bilibili":
+                    url = "https://search.bilibili.com/all?keyword=" + encodeURIComponent(keyword);
+                    break;
+                default:
+                    url = "https://www.baidu.com/s?wd=" + encodeURIComponent(keyword);
+            }
+
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        searchBtn.addEventListener("click", doSearch);
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") doSearch();
+        });
+
+        /* ===== 快捷方式（双击打开） ===== */
+        document.querySelectorAll(".icon").forEach(icon => {
+            icon.addEventListener("dblclick", () => {
+                const url = icon.getAttribute("data-url");
+                if (url) {
+                    window.open(url, "_blank", "noopener,noreferrer");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
