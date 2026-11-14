@@ -70,7 +70,7 @@ body {
 /* ===== 主体布局 ===== */
 .layout {
   display: flex;
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 16px;
   gap: 16px;
@@ -130,9 +130,16 @@ body {
 /* ===== 卡片两列网格 ===== */
 .card-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 5fr 3fr;
   gap: 16px;
   align-items: start;
+
+  /* 新增：外框，使用左侧导航卡片的颜色 */
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
 .card-grid .social-card {
@@ -227,7 +234,7 @@ body {
 /* ===== 卡片 ===== */
 .fpbox {
   position: relative;
-  background: #1a1a1a;
+  background: #222222;
   border: 1px solid #333;
   padding: 24px 20px;
   margin-bottom: 0;
