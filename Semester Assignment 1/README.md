@@ -1,106 +1,106 @@
-# 酒馆战棋随从图鉴 · Web 开发技术学期作业
+# Каталог существ Battlegrounds · Семестровая работа по веб-разработке
 
-一个模仿《炉石传说》酒馆战棋图鉴的课程项目。使用自研 HttpListener 服务器、模板引擎、ORM 和 PostgreSQL。
+Учебный проект — каталог существ в стиле Hearthstone Battlegrounds. Используются собственный HTTP-сервер на `HttpListener`, шаблонизатор, ORM и PostgreSQL.
 
-## 当前状态
+## Текущее состояние
 
-- 214 张随从卡牌已存入 PostgreSQL
-- 卡牌列表、等级/种族筛选、AJAX 关键词搜索和卡牌详情页
-- 已完成 HttpListener 服务器、路由、POST 表单、Cookie 和 Session
-- 已完成自研模板引擎：变量、循环、条件、嵌套
-- 已完成自研 ORM 和 Repository：CRUD、事务、参数化查询
-- 管理员登录、权限检查、卡牌新增/编辑/删除
-- 留言反馈表单、客户端/服务端校验
-- 14 个 MSTest 单元测试
-- Docker 文件已提供，但本机未安装 Docker，未做容器运行验证
+- 214 карт существ сохранены в PostgreSQL
+- Список карт, фильтрация по уровню и племени, AJAX-поиск и страница карты
+- Реализованы HTTP-сервер на `HttpListener`, маршрутизация, POST-формы, Cookie и Session
+- Реализован собственный шаблонизатор: переменные, циклы, условия, вложенность
+- Реализованы собственная ORM и Repository: CRUD, транзакции, параметризованные запросы
+- Вход администратора, проверка прав, добавление/редактирование/удаление карт
+- Форма обратной связи, клиентская и серверная валидация
+- 14 модульных тестов MSTest
+- Файлы Docker добавлены, но Docker на локальной машине не установлен, запуск контейнера не проверялся
 
-## 环境要求
+## Требования к окружению
 
 - Windows 10/11
 - .NET 9 SDK
-- Visual Studio 2022 17.12 或更高版本（支持 .NET 9）
-- 不使用 ASP.NET Core MVC
+- Visual Studio 2022 версии 17.12 или выше (с поддержкой .NET 9)
+- ASP.NET Core MVC не используется
 
-## 启动服务器
+## Запуск сервера
 
-1. 用 Visual Studio 2022 打开解决方案：
+1. Откройте решение в Visual Studio 2022:
 
    ```text
    BattlegroundsGallery.sln
    ```
 
-2. 在解决方案资源管理器中右键 `BattlegroundsGallery.Web`，选择 **设为启动项目**。
+2. В обозревателе решений щёлкните правой кнопкой по `BattlegroundsGallery.Web` и выберите **Назначить запускаемым проектом**.
 
-3. 第一次运行时，需要给当前 Windows 用户注册本地 HttpListener 地址。  
-   以管理员身份打开 PowerShell，在项目根目录运行：
+3. При первом запуске нужно зарегистрировать локальный адрес `HttpListener` для текущего пользователя Windows.  
+   Откройте PowerShell от имени администратора и выполните в корне проекта:
 
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\scripts\Setup-UrlAcl.ps1
    ```
 
-   这个脚本只需要运行一次。它执行的是：
+   Скрипт нужно запустить только один раз. Он выполняет:
 
    ```text
-   netsh http add urlacl url=http://localhost:5080/ user=当前用户
+   netsh http add urlacl url=http://localhost:5080/ user=ИМЯ_ПОЛЬЗОВАТЕЛЯ
    ```
 
-4. 按 `F5` 启动，浏览器打开：
+4. Нажмите `F5` и откройте в браузере:
 
    ```text
    http://localhost:5080/
    ```
 
-   可用接口：
+   Доступные endpoints:
 
    ```text
    GET /health
    GET /api/status
    ```
 
-如果不想配置 URL ACL，也可以直接以管理员身份运行 Visual Studio，但推荐使用一次性的 URL 注册脚本。
+Если не хотите настраивать URL ACL, можно запустить Visual Studio от имени администратора, но рекомендуется один раз выполнить скрипт регистрации URL.
 
-### 关于当前机器的兼容模式
+### Режим совместимости на текущей машине
 
-有些 Windows 安装会把 `HttpListener.IsSupported` 报告为 `false`，此时 `HttpListener.Start()` 会直接抛出“句柄无效”。程序检测到这种情况后，会自动启动 `TcpListener` 兼容服务器，仍然能打开同一个图鉴页面：
+В некоторых установках Windows `HttpListener.IsSupported` возвращает `false`, и тогда `HttpListener.Start()` выбрасывает ошибку «неверный дескриптор». Программа обнаруживает это и автоматически запускает совместимый сервер на `TcpListener`, который отдаёт ту же страницу каталога:
 
 ```text
 HttpListener.IsSupported = false on this Windows installation.
 Starting the TcpListener compatibility server instead.
 ```
 
-兼容模式只用于本地调试和展示。项目的正式服务器实现仍然是 `BattlegroundsGallery.Server/HttpServer.cs` 中的 HttpListener；在支持 HttpListener 的机器上会自动使用它。
+Режим совместимости предназначен только для локальной отладки и демонстрации. Основная реализация сервера — `HttpListener` в `BattlegroundsGallery.Server/HttpServer.cs`; на машинах с поддержкой `HttpListener` используется именно она.
 
-### 命令行运行
+### Запуск из командной строки
 
 ```powershell
 dotnet build BattlegroundsGallery.sln
 dotnet run --project src\BattlegroundsGallery.Web\BattlegroundsGallery.Web.csproj
 ```
 
-默认端口是 `5080`。可以通过参数修改：
+Порт по умолчанию — `5080`. Его можно изменить параметром:
 
 ```powershell
 dotnet run --project src\BattlegroundsGallery.Web\BattlegroundsGallery.Web.csproj -- --port 5090
 ```
 
-## 数据库
+## База данных
 
-项目使用本机 PostgreSQL 18，数据库名 `battlegrounds_gallery`，应用账号：
+Проект использует локальный PostgreSQL 18, база данных `battlegrounds_gallery`, учётная запись приложения:
 
 ```text
 username: bg_app
 password: bg_dev_password
 ```
 
-首次创建数据库：
+Первое создание базы данных:
 
 ```powershell
 .\scripts\Setup-Database.ps1
 ```
 
-脚本会提示输入 PostgreSQL 的 `postgres` 密码，然后自动创建账号、数据库、表结构并导入 214 张卡牌。
+Скрипт запросит пароль пользователя `postgres` в PostgreSQL, затем создаст учётную запись, базу данных, таблицы и импортирует 214 карт.
 
-也可以手动执行：
+Можно выполнить вручную:
 
 ```powershell
 $env:PGPASSWORD = "bg_dev_password"
@@ -108,48 +108,48 @@ psql -h 127.0.0.1 -U bg_app -d battlegrounds_gallery -f db/schema.sql
 psql -h 127.0.0.1 -U bg_app -d battlegrounds_gallery -f db/seed.sql
 ```
 
-数据库连接字符串位于：
+Строка подключения к базе данных находится в:
 
 ```text
 src/BattlegroundsGallery.Data/DatabaseOptions.cs
 ```
 
-可通过环境变量 `BATTLEGROUNDS_DB` 覆盖。
+Её можно переопределить переменной окружения `BATTLEGROUNDS_DB`.
 
-种子管理员账号：
+Начальная учётная запись администратора:
 
 ```text
 username: admin
 password: admin123
 ```
 
-## 测试
+## Тестирование
 
-测试项目：
+Тестовый проект:
 
 ```text
 tests/BattlegroundsGallery.UnitTests
 ```
 
-运行：
+Запуск:
 
 ```powershell
 dotnet test tests\BattlegroundsGallery.UnitTests\BattlegroundsGallery.UnitTests.csproj
 ```
 
-当前覆盖 14 个测试，包括路由、模板引擎、密码哈希、Repository CRUD 和表单校验。
+Сейчас покрыто 14 тестов: маршрутизация, шаблонизатор, хеширование паролей, CRUD в Repository и валидация форм.
 
 ## Docker
 
-需要安装 Docker Desktop，并使用 **Linux containers**。
+Требуется установленный Docker Desktop с **Linux-контейнерами**.
 
-在项目根目录执行：
+В корне проекта выполните:
 
 ```powershell
 docker compose up --build
 ```
 
-启动后访问：
+После запуска откройте:
 
 ```text
 http://localhost:5080/
@@ -157,69 +157,69 @@ http://localhost:5080/cards
 http://localhost:5080/feedback
 ```
 
-Compose 会启动：
+Compose запускает:
 
-- `db`：PostgreSQL 18
-- `web`：.NET 9 应用
+- `db`: PostgreSQL 18
+- `web`: приложение .NET 9
 
-数据库首次启动时会自动执行：
+При первом запуске базы данных автоматически выполняются:
 
 ```text
 db/schema.sql
 db/seed.sql
 ```
 
-停止容器：
+Остановка контейнеров:
 
 ```powershell
 docker compose down
 ```
 
-如果需要同时删除数据库数据卷：
+Если нужно также удалить том с данными базы:
 
 ```powershell
 docker compose down -v
 ```
 
-> Docker 运行使用 Linux 容器和 .NET 的跨平台 HttpListener 实现；Windows 本机运行仍使用 Windows HTTP.sys。
+> В Docker используется Linux-контейнер и кроссплатформенная реализация `HttpListener` из .NET; при локальном запуске в Windows используется Windows HTTP.sys.
 
-## 项目结构
+## Структура проекта
 
 ```text
 BattlegroundsGallery.sln
 src/
-  BattlegroundsGallery.Server/    HttpListener、路由、静态文件、异常处理
-  BattlegroundsGallery.Mvc/       Controller / ActionResult 骨架
-  BattlegroundsGallery.Templating/自研模板引擎
-  BattlegroundsGallery.Orm/       自研 ORM：映射、CRUD、事务、参数化
-  BattlegroundsGallery.Data/      数据模型、Repository、数据库配置
-  BattlegroundsGallery.Web/       启动项目、控制器、视图、wwwroot
-    wwwroot/                      现有酒馆战棋图鉴页面和 214 张卡图
-    Views/                        服务端渲染视图
+  BattlegroundsGallery.Server/    HttpListener, маршрутизация, статические файлы, обработка исключений
+  BattlegroundsGallery.Mvc/       Controller / ActionResult
+  BattlegroundsGallery.Templating/Собственный шаблонизатор
+  BattlegroundsGallery.Orm/       Собственная ORM: отображение, CRUD, транзакции, параметризация
+  BattlegroundsGallery.Data/      Модели данных, Repository, конфигурация БД
+  BattlegroundsGallery.Web/       Запускаемый проект, контроллеры, представления, wwwroot
+    wwwroot/                      Страницы каталога и 214 изображений карт
+    Views/                        Представления, рендерируемые сервером
 scripts/
-  Setup-UrlAcl.ps1                本地 HttpListener 地址注册
-  Setup-Database.ps1              创建数据库并导入数据
+  Setup-UrlAcl.ps1                Регистрация локального адреса HttpListener
+  Setup-Database.ps1              Создание БД и импорт данных
 db/
-  schema.sql                      数据库表、主键、外键、索引
-  seed.sql                        10 个种族、214 张卡、管理员账号
+  schema.sql                      Таблицы, первичные и внешние ключи, индексы
+  seed.sql                        10 племён, 214 карт, учётная запись администратора
 tests/
-  BattlegroundsGallery.UnitTests/ MSTest 单元测试
-Dockerfile                        应用镜像
-docker-compose.yml                应用 + PostgreSQL
+  BattlegroundsGallery.UnitTests/ Модульные тесты MSTest
+Dockerfile                        Образ приложения
+docker-compose.yml                Приложение + PostgreSQL
 README.md
 ```
 
-## 模板引擎语法
+## Синтаксис шаблонизатора
 
-目前 `BattlegroundsGallery.Templating` 已支持变量、循环和条件。
+Сейчас `BattlegroundsGallery.Templating` поддерживает переменные, циклы и условия.
 
 ```html
 <h1>{{ model.Title }}</h1>
 
 @if (model.Cards.Count > 0)
-  <p>共有 {{ model.Cards.Count }} 张卡牌</p>
+  <p>Всего карт: {{ model.Cards.Count }}</p>
 @else
-  <p>没有卡牌</p>
+  <p>Карт нет</p>
 @endif
 
 @foreach (var card in model.Cards)
@@ -227,20 +227,20 @@ README.md
 @endforeach
 ```
 
-- `{{ value }}` 输出并自动进行 HTML 转义
-- `{{{ value }}}` 输出原始 HTML
+- `{{ value }}` выводит значение с автоматическим HTML-экранированием
+- `{{{ value }}}` выводит исходный HTML
 - `@if (...) ... @else ... @endif`
 - `@foreach (var item in collection) ... @endforeach`
-- 支持嵌套循环和条件
-- 条件支持 `!`、`==`、`!=`、`>`、`>=`、`<`、`<=`
-- 输出表达式支持属性路径，例如 `{{ card.Name }}`
+- Поддерживаются вложенные циклы и условия
+- В условиях поддерживаются `!`, `==`, `!=`, `>`, `>=`, `<`, `<=`
+- В выражениях можно обращаться к свойствам, например `{{ card.Name }}`
 
-## 下一步
+## Дальнейшие шаги
 
-1. 后台卡牌描述接入 Quill WYSIWYG。
-2. 补充后台操作提示和删除确认。
-3. 进行最终验收测试。
-4. 初始化 Git 仓库并提交。
-5. 如环境允许，补做 Docker 容器运行验证。
+1. Подключить Quill WYSIWYG для описания карт в административной панели.
+2. Добавить уведомления об операциях и подтверждение удаления.
+3. Провести финальное приёмочное тестирование.
+4. Инициализировать Git-репозиторий и зафиксировать изменения.
+5. При наличии окружения проверить запуск в Docker.
 
-> 卡牌名称、数值和图片素材仅用于课堂练习与界面演示，版权归暴雪娱乐所有。
+> Названия карт, характеристики и изображения используются только для учебной демонстрации; права принадлежат Blizzard Entertainment.
